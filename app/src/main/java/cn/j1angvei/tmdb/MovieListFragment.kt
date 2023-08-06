@@ -39,7 +39,8 @@ class MovieListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.rvMovie.layoutManager = LinearLayoutManager(context)
-        binding.rvMovie.adapter = pagingAdapter
+        binding.rvMovie.adapter =
+            pagingAdapter.withLoadStateFooter(LoadStateAdapter(pagingAdapter::retry))
         lifecycleScope.launch {
             viewModel.movieFlow.collectLatest { list -> pagingAdapter.submitData(list) }
         }
