@@ -6,7 +6,6 @@ import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import cn.j1angvei.tmdb.databinding.ItemPopularMovieBinding
-import com.bumptech.glide.Glide
 import java.text.SimpleDateFormat
 import java.util.Locale
 
@@ -42,7 +41,7 @@ class MovieListAdapter : PagingDataAdapter<Movie, MovieListAdapter.ViewHolder>(d
         fun bind(movie: Movie?) {
             movie ?: return
             with(binding) {
-                Glide.with(itemView.context).load(movie.fullPoster).into(ivPoster)
+                ivPoster.loadImage(movie.fullPoster, R.drawable.ic_poster_placeholder)
                 val year = yearSdf.format(movie.releaseDate)
                 tvTitle.text = itemView.context.getString(R.string.title_year, movie.title, year)
                 rbRating.rating = movie.voteAverage

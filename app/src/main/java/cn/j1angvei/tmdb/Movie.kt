@@ -1,10 +1,13 @@
 package cn.j1angvei.tmdb
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import java.util.Date
 
+@Entity("movie")
 data class Movie(
-    val id: Int,
-    val backdropPath: String,
+    @PrimaryKey val id: Int,
+    val backdropPath: String?,
     val genreIds: List<Int>,
     val title: String,
     val originalTitle: String,
@@ -12,7 +15,9 @@ data class Movie(
     val releaseDate: Date,
     val posterPath: String,
     val voteAverage: Float,
-    val voteCount: Int
+    val voteCount: Int,
+    var page: Int,
+    var idxInPage: Int
 ) {
 
     val fullPoster: String
