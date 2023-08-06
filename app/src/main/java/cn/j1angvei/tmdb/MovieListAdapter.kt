@@ -1,5 +1,6 @@
 package cn.j1angvei.tmdb
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
@@ -36,6 +37,7 @@ class MovieListAdapter : PagingDataAdapter<Movie, MovieListAdapter.ViewHolder>(d
 
         fun bind(movie: Movie?) {
             movie ?: return
+            Log.d(TAG, "bind: $movie")
             binding.tvTitle.text = movie.title
         }
     }

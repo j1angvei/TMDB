@@ -1,3 +1,16 @@
 package cn.j1angvei.tmdb
 
-data class Movie(val id: Int, val title: String)
+import java.util.Date
+
+data class Movie(
+    val id: Int,
+    val backdropPath: String,
+    val genreIds: List<Int>,
+    val title: String,
+    val originalTitle: String,
+    val overview: String,
+    val releaseDate: Date,
+    val posterPath: String,
+    val voteAverage: Float,
+    val voteCount: Int
+)
