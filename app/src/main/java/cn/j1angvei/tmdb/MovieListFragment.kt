@@ -43,12 +43,5 @@ class MovieListFragment : Fragment() {
         lifecycleScope.launch {
             viewModel.movieFlow.collectLatest { list -> pagingAdapter.submitData(list) }
         }
-
-        binding.btnLoad.setOnClickListener {
-            lifecycleScope.launch {
-                val rsp = api.popularMovies(1)
-                Log.d(TAG, "onViewCreated: $rsp")
-            }
-        }
     }
 }

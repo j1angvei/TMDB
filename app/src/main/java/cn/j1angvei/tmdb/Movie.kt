@@ -13,4 +13,8 @@ data class Movie(
     val posterPath: String,
     val voteAverage: Float,
     val voteCount: Int
-)
+) {
+
+    val fullPoster: String
+        get() = TMDB_IMG_URL + posterPath
+}
