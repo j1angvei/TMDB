@@ -3,7 +3,9 @@ package cn.j1angvei.tmdb
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import cn.j1angvei.tmdb.databinding.ActivityMainBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
