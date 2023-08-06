@@ -11,6 +11,5 @@ import javax.inject.Inject
 @HiltViewModel
 class MovieListViewModel @Inject constructor(private val source: MoviePagingSource) : ViewModel() {
 
-
     val movieFlow = Pager(PagingConfig(TMDB_PAGE_SIZE)) { source }.flow.cachedIn(viewModelScope)
 }

@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import cn.j1angvei.tmdb.databinding.FragmentMovieListBinding
@@ -23,7 +23,7 @@ class MovieListFragment : Fragment() {
     @Inject
     lateinit var api: TmdbApiService
 
-    private val viewModel: MovieListViewModel by viewModels()
+    private val viewModel: MovieListViewModel by hiltNavGraphViewModels(R.id.home_navigation)
 
     private val pagingAdapter = MovieListAdapter()
 
