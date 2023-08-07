@@ -7,13 +7,13 @@
 
     <fragment
         android:id="@+id/navigation_movie"
-        android:name="cn.j1angvei.tmdb.MovieListFragment"
+        android:name="cn.j1angvei.tmdb.list.movie.MovieListFragment"
         android:label="@string/title_movie"
         tools:layout="@layout/fragment_movie_list" />
 
     <fragment
         android:id="@+id/navigation_people"
-        android:name="cn.j1angvei.tmdb.popular.person.PersonListFragment"
+        android:name="cn.j1angvei.tmdb.list.person.PersonListFragment"
         android:label="@string/title_people"
         tools:layout="@layout/fragment_people_list" />
 
