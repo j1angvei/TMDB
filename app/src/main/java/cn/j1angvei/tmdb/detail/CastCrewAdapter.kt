@@ -1,12 +1,17 @@
 package cn.j1angvei.tmdb.detail
 
+import android.annotation.SuppressLint
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import cn.j1angvei.tmdb.R
 import cn.j1angvei.tmdb.databinding.ItemCastCrewHeaderBinding
 import cn.j1angvei.tmdb.databinding.ItemMovieCastBinding
 import cn.j1angvei.tmdb.databinding.ItemMovieCrewBinding
+import cn.j1angvei.tmdb.inflateView
+import cn.j1angvei.tmdb.loadImage
 
 /**
  *
@@ -19,40 +24,91 @@ class CastCrewAdapter : ListAdapter<Any, RecyclerView.ViewHolder>(diffCallback) 
         private const val VIEW_TYPE_CAST = 1
         private const val VIEW_TYPE_CREW = 2
         private const val VIEW_TYPE_HEADER = 3
-        private const val VIEW_TYPE_DUMMY = 4
 
         private val diffCallback = object : DiffUtil.ItemCallback<Any>() {
             override fun areItemsTheSame(oldItem: Any, newItem: Any): Boolean {
-                TODO("Not yet implemented")
+                if (oldItem::class != newItem::class) {
+                    return false
+                }
+                return when (oldItem) {
+                    is Cast -> oldItem.id == (newItem as Cast).id
+                    is Crew -> oldItem.id == (newItem as Crew).id
+                    is CastCrewHeader -> oldItem.title == (newItem as? CastCrewHeader)?.title
+                    else -> false
+                }
             }
 
+            @SuppressLint("DiffUtilEquals")
             override fun areContentsTheSame(oldItem: Any, newItem: Any): Boolean {
-                TODO("Not yet implemented")
+                return oldItem == newItem
             }
         }
     }
 
     override fun getItemViewType(position: Int): Int {
-        return when (getItem(position)) {
+        return when (val item = getItem(position)) {
             is Cast -> VIEW_TYPE_CAST
             is Crew -> VIEW_TYPE_CREW
             is CastCrewHeader -> VIEW_TYPE_HEADER
-            else -> VIEW_TYPE_DUMMY
+            else -> throw IllegalArgumentException("illegal item $item")
         }
     }
 
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        TODO("Not yet implemented")
+        return when (viewType) {
+            VIEW_TYPE_CAST -> CastViewHolder(parent)
+            VIEW_TYPE_CREW -> CrewViewHolder(parent)
+            VIEW_TYPE_HEADER -> HeaderViewHolder(parent)
+            else -> throw IllegalArgumentException("invalid viewType $viewType")
+        }
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        TODO("Not yet implemented")
+        when (holder) {
+            is CastViewHolder -> holder.bind(getItem(position) as? Cast)
+            is CrewViewHolder -> holder.bind(getItem(position) as? Crew)
+            is HeaderViewHolder -> holder.bind(getItem(position) as? CastCrewHeader)
+        }
     }
 
-    class CastViewHolder(binding: ItemMovieCastBinding) : RecyclerView.ViewHolder(binding.root)
-    class CrewViewHolder(binding: ItemMovieCrewBinding) : RecyclerView.ViewHolder(binding.root)
-    class HeaderViewHolder(binding: ItemCastCrewHeaderBinding) :
-        RecyclerView.ViewHolder(binding.root)
+    class CastViewHolder(parent: ViewGroup) :
+        RecyclerView.ViewHolder(parent.inflateView(R.layout.item_movie_cast)) {
+        private val binding = ItemMovieCastBinding.bind(itemView)
+        fun bind(cast: Cast?) {
+            binding.root.isVisible = cast != null
+            cast ?: return
+            binding.ivProfile.loadImage(cast.fullProfile, R.drawable.ic_person_placeholder)
+            binding.tvName.text = cast.name
+            val ctx = binding.root.context
+            binding.tvJob.text =
+                ctx.getString(R.string.cast_job, if (cast.isMale) "Actor" else "Actress")
+            val character = cast.character.ifBlank { "未知角色" }
+            binding.tvCharacter.text = ctx.getString(R.string.cast_character, character)
+        }
+    }
+
+    class CrewViewHolder(parent: ViewGroup) :
+        RecyclerView.ViewHolder(parent.inflateView(R.layout.item_movie_crew)) {
+        private val binding = ItemMovieCrewBinding.bind(itemView)
+        fun bind(crew: Crew?) {
+            binding.root.isVisible = crew != null
+            crew ?: return
+            binding.ivProfile.loadImage(crew.fullProfile, R.drawable.ic_person_placeholder)
+            binding.tvName.text = crew.name
+            binding.tvJob.text = crew.job.ifBlank { "工作未知" }
+            binding.tvDepartment.text = crew.department.ifBlank { "部门未知" }
+        }
+    }
+
+    class HeaderViewHolder(parent: ViewGroup) :
+        RecyclerView.ViewHolder(parent.inflateView(R.layout.item_cast_crew_header)) {
+        private val binding = ItemCastCrewHeaderBinding.bind(itemView)
+        fun bind(header: CastCrewHeader?) {
+            binding.root.isVisible = header != null
+            header ?: return
+            binding.tvText.text = header.title
+            binding.tvCount.text = header.count.toString()
+        }
+    }
 
 }

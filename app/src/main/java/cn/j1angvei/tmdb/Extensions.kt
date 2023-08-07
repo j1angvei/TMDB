@@ -1,10 +1,13 @@
 package cn.j1angvei.tmdb
 
 import android.graphics.Outline
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.view.ViewOutlineProvider
 import android.widget.ImageView
 import androidx.annotation.DrawableRes
+import androidx.annotation.LayoutRes
 import com.bumptech.glide.Glide
 
 fun ImageView.loadImage(url: String, @DrawableRes placeholder: Int) {
@@ -19,4 +22,8 @@ fun View.setRadius(radius: Float) {
         }
     }
     clipToOutline = true
+}
+
+fun ViewGroup.inflateView(@LayoutRes layoutId: Int, attachToRoot: Boolean = false): View {
+    return LayoutInflater.from(context).inflate(layoutId, this, attachToRoot)
 }

@@ -4,4 +4,6 @@
     <string name="title_tv_show">电视剧</string>
     <string name="title_people">人物</string>
     <string name="title_year">%1$s（%2$s）</string>
+    <string name="cast_job">演员 %1$s</string>
+    <string name="cast_character">饰 %1$s</string>
 </resources>

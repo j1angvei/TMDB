@@ -7,13 +7,15 @@
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:minHeight="?actionBarSize">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layout_movie_info"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/c_9b9b9b">
+            android:padding="12dp"
+            app:layout_scrollFlags="scroll">
 
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/iv_poster"
@@ -21,7 +23,8 @@
                 android:layout_height="0dp"
                 app:layout_constraintDimensionRatio="H,32:46"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:shapeAppearance="@style/RoundStyle" />
 
             <TextView
                 android:id="@+id/tv_title"
@@ -51,9 +54,9 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
-                android:alpha="0.4"
+                android:alpha="0.7"
                 android:textColor="@android:color/white"
-                android:textSize="14sp"
+                android:textSize="12sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/tv_title"
                 app:layout_constraintTop_toBottomOf="@+id/tv_original_title_year" />
@@ -66,17 +69,25 @@
                 app:constraint_referenced_ids="iv_poster,tv_extra_info" />
 
             <TextView
+                android:visibility="gone"
                 android:id="@+id/tv_overview_header"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="8dp"
                 android:text="剧情简介"
+                android:textColor="@android:color/white"
+                android:textSize="18sp"
+                android:textStyle="bold"
                 app:layout_constraintTop_toBottomOf="@+id/barrier_poster_info" />
 
             <TextView
                 android:id="@+id/tv_overview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="这个是剧情简介\n这个是剧情简介\n这个是剧情简介"
+                android:alpha="0.9"
+                android:textColor="@android:color/white"
+                android:textSize="14sp"
                 app:layout_constraintTop_toBottomOf="@+id/tv_overview_header" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -85,9 +96,9 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/vp2_cast_crew"
+        android:id="@+id/rv_cast_crew"
         android:layout_width="match_parent"
-        android:layout_height="600dp"
+        android:layout_height="match_parent"
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -1,7 +1,8 @@
 package cn.j1angvei.tmdb.di
 
-import cn.j1angvei.tmdb.api.HeadersInterceptor
+import cn.j1angvei.tmdb.CALL_TIME_OUT
 import cn.j1angvei.tmdb.TMDB_BASE_URL
+import cn.j1angvei.tmdb.api.HeadersInterceptor
 import cn.j1angvei.tmdb.api.TmdbApiService
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.Gson
@@ -14,6 +15,7 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
 @Module
@@ -29,7 +31,7 @@ object NetworkModule {
     @Singleton
     @Provides
     fun provideOkHttpClient(): OkHttpClient {
-        return OkHttpClient.Builder()
+        return OkHttpClient.Builder().callTimeout(CALL_TIME_OUT, TimeUnit.SECONDS)
             .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BASIC))
             .addInterceptor(HeadersInterceptor()).build()
     }
