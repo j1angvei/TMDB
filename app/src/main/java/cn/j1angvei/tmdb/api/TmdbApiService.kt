@@ -1,8 +1,9 @@
 package cn.j1angvei.tmdb.api
 
+import cn.j1angvei.tmdb.detail.MovieDetail
+import cn.j1angvei.tmdb.detail.PersonDetail
 import cn.j1angvei.tmdb.list.PopularRsp
 import cn.j1angvei.tmdb.list.movie.Movie
-import cn.j1angvei.tmdb.detail.MovieDetail
 import cn.j1angvei.tmdb.list.person.Person
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -26,4 +27,11 @@ interface TmdbApiService {
         @Query("language") language: String = "zh-CN",
         @Query("append_to_response") appendToRsp: String = "credits"
     ): MovieDetail
+
+    @GET("person/{id}")
+    suspend fun personDetail(
+        @Path("id") movieId: Int,
+        @Query("language") language: String = "zh-CN",
+        @Query("append_to_response") appendToRsp: String = "tv_credits,movie_credits,images"
+    ): PersonDetail
 }

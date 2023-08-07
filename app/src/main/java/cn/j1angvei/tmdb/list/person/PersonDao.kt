@@ -15,6 +15,6 @@ interface PersonDao {
     @Query("SELECT * FROM person ORDER BY page ASC, idxInPage ASC")
     fun pagingSource(): PagingSource<Int, Person>
 
-    @Query("DELETE FROM movie")
+    @Query("DELETE FROM person")
     suspend fun deleteAll()
 }

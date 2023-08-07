@@ -7,12 +7,12 @@ import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
 import androidx.room.withTransaction
 import cn.j1angvei.tmdb.DB_CACHE_EXPIRE_DURATION
-import cn.j1angvei.tmdb.list.PageKey
-import cn.j1angvei.tmdb.list.PageType
 import cn.j1angvei.tmdb.TAG
 import cn.j1angvei.tmdb.TMDB_START_PAGE
 import cn.j1angvei.tmdb.api.TmdbApiService
 import cn.j1angvei.tmdb.db.TmdbDataBase
+import cn.j1angvei.tmdb.list.PageKey
+import cn.j1angvei.tmdb.list.PageType
 import retrofit2.HttpException
 import java.io.IOException
 import javax.inject.Inject
@@ -41,7 +41,7 @@ class PersonRemoteMediator @Inject constructor(
             LoadType.REFRESH -> state.anchorPosition?.let { state.closestItemToPosition(it) }
             LoadType.PREPEND -> state.firstItemOrNull()
             LoadType.APPEND -> state.lastItemOrNull()
-        }?.id?.let { movieId -> pageKeyDao.findByTypeAndId(movieId, PageType.PERSON) }
+        }?.id?.let { personId -> pageKeyDao.findByTypeAndId(personId, PageType.PERSON) }
         val reqPage = when (loadType) {
             LoadType.REFRESH -> pageKey?.curPage ?: TMDB_START_PAGE
             LoadType.PREPEND -> pageKey?.prevPage
@@ -58,13 +58,13 @@ class PersonRemoteMediator @Inject constructor(
                 val pageKeys =
                     rsp.results.map { PageKey(PageType.PERSON, it.id, reqPage, rsp.totalPages) }
                 pageKeyDao.insertAll(pageKeys)
-                val movieList = rsp.results.onEachIndexed { index, movie ->
+                val peopleList = rsp.results.onEachIndexed { index, person ->
                     run {
-                        movie.page = reqPage
-                        movie.idxInPage = index
+                        person.page = reqPage
+                        person.idxInPage = index
                     }
                 }
-                personDao.insertAll(movieList)
+                personDao.insertAll(peopleList)
             }
             MediatorResult.Success(rsp.page == rsp.totalPages)
         } catch (e: IOException) {

@@ -9,7 +9,7 @@ import androidx.room.Query
 @Dao
 interface MovieDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertAll(users: List<Movie>)
+    suspend fun insertAll(list: List<Movie>)
 
     @Query("SELECT * FROM movie ORDER BY page ASC, idxInPage ASC")
     fun pagingSource(): PagingSource<Int, Movie>
