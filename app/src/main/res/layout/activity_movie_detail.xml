@@ -84,7 +84,7 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <androidx.viewpager2.widget.ViewPager2
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/vp2_cast_crew"
         android:layout_width="match_parent"
         android:layout_height="600dp"
