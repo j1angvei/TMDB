@@ -8,20 +8,19 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import cn.j1angvei.tmdb.databinding.FragmentMovieListBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.distinctUntilChangedBy
+import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class MovieListFragment : Fragment() {
 
     private lateinit var binding: FragmentMovieListBinding
-
-    @Inject
-    lateinit var api: TmdbApiService
 
     private val viewModel: MovieListViewModel by hiltNavGraphViewModels(R.id.home_navigation)
 
@@ -41,6 +40,17 @@ class MovieListFragment : Fragment() {
         binding.rvMovie.layoutManager = LinearLayoutManager(context)
         binding.rvMovie.adapter =
             pagingAdapter.withLoadStateFooter(LoadStateAdapter(pagingAdapter::retry))
+        binding.srlMovie.setOnRefreshListener { pagingAdapter.refresh() }
+        lifecycleScope.launch {
+            pagingAdapter.loadStateFlow.collectLatest {
+                binding.srlMovie.isRefreshing = it.refresh == LoadState.Loading
+            }
+        }
+        lifecycleScope.launch {
+            pagingAdapter.loadStateFlow.distinctUntilChangedBy { it.refresh }
+                .filter { it.refresh is LoadState.NotLoading }
+                .collect { binding.rvMovie.smoothScrollToPosition(0) }
+        }
         lifecycleScope.launch {
             viewModel.movieFlow.collectLatest { list -> pagingAdapter.submitData(list) }
         }

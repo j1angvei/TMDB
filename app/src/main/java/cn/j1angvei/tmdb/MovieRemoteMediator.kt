@@ -40,6 +40,7 @@ class MovieRemoteMediator @Inject constructor(
             LoadType.PREPEND -> pageKey?.prevPage
             LoadType.APPEND -> pageKey?.nextPage
         } ?: return MediatorResult.Success(endOfPaginationReached = pageKey != null)
+        Log.d(TAG, "load: pageKey $pageKey, reqPage $reqPage")
         return try {
             val rsp = api.popularMovies(reqPage)
             db.withTransaction {
@@ -60,8 +61,10 @@ class MovieRemoteMediator @Inject constructor(
             }
             MediatorResult.Success(rsp.page == rsp.totalPages)
         } catch (e: IOException) {
+            Log.e(TAG, "load: ", e)
             MediatorResult.Error(e)
         } catch (e: HttpException) {
+            Log.e(TAG, "load: ", e)
             MediatorResult.Error(e)
         }
     }
