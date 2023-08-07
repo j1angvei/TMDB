@@ -41,7 +41,7 @@ class MovieListAdapter : PagingDataAdapter<Movie, MovieListAdapter.ViewHolder>(d
         fun bind(movie: Movie?) {
             movie ?: return
             with(binding) {
-                ivPoster.loadImage(movie.fullPoster, R.drawable.ic_poster_placeholder)
+                ivProfile.loadImage(movie.fullPoster, R.drawable.ic_poster_placeholder)
                 val year = yearSdf.format(movie.releaseDate)
                 tvTitle.text = itemView.context.getString(R.string.title_year, movie.title, year)
                 rbRating.rating = movie.voteAverage

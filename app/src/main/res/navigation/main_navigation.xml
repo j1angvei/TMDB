@@ -12,16 +12,9 @@
         tools:layout="@layout/fragment_movie_list" />
 
     <fragment
-        android:id="@+id/navigation_tv_show"
-        android:name="cn.j1angvei.tmdb.MovieListFragment"
-        android:label="@string/title_tv_show"
-        tools:layout="@layout/fragment_movie_list" />
-
-    <fragment
         android:id="@+id/navigation_people"
-        android:name="cn.j1angvei.tmdb.MovieListFragment"
+        android:name="cn.j1angvei.tmdb.popular.person.PersonListFragment"
         android:label="@string/title_people"
-        tools:layout="@layout/fragment_movie_list" />
-
+        tools:layout="@layout/fragment_people_list" />
 
 </navigation>
