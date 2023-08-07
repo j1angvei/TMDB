@@ -14,6 +14,8 @@
         <!-- Customize your theme here. -->
     </style>
 
+    <style name="Theme.TMDB.NoActionBar" parent="Theme.MaterialComponents.DayNight.NoActionBar" />
+
     <style name="Movie.RatingBar" parent="Widget.AppCompat.RatingBar.Indicator">
         <item name="colorControlNormal">@color/alto</item>
         <item name="colorControlActivated">@color/orange_peel</item>

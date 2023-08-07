@@ -11,3 +11,8 @@ const val TMDB_ACCESS_TOKEN =
 const val DB_CACHE_EXPIRE_DURATION = 1000 * 60 * 1L // 1分钟过期
 
 const val TMDB_START_PAGE = 1
+
+const val EXTRA_MOVIE_ID = "movie_id"
+const val EXTRA_MOVIE_TITLE = "movie_title"
+const val EXTRA_PERSON_ID = "person_id"
+

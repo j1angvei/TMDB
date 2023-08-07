@@ -2,7 +2,7 @@ package cn.j1angvei.tmdb.api
 
 import cn.j1angvei.tmdb.list.PopularRsp
 import cn.j1angvei.tmdb.list.movie.Movie
-import cn.j1angvei.tmdb.list.movie.MovieDetail
+import cn.j1angvei.tmdb.detail.MovieDetail
 import cn.j1angvei.tmdb.list.person.Person
 import retrofit2.http.GET
 import retrofit2.http.Path

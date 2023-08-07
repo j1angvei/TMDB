@@ -1,12 +1,16 @@
 package cn.j1angvei.tmdb.list.movie
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import cn.j1angvei.tmdb.EXTRA_MOVIE_ID
+import cn.j1angvei.tmdb.EXTRA_MOVIE_TITLE
 import cn.j1angvei.tmdb.R
 import cn.j1angvei.tmdb.databinding.ItemPopularMovieBinding
+import cn.j1angvei.tmdb.detail.MovieDetailActivity
 import cn.j1angvei.tmdb.loadImage
 import java.text.SimpleDateFormat
 import java.util.Locale
@@ -43,6 +47,13 @@ class MovieListAdapter : PagingDataAdapter<Movie, MovieListAdapter.ViewHolder>(d
         fun bind(movie: Movie?) {
             movie ?: return
             with(binding) {
+                root.setOnClickListener {
+                    val intent = Intent(itemView.context, MovieDetailActivity::class.java).apply {
+                        putExtra(EXTRA_MOVIE_ID, movie.id)
+                        putExtra(EXTRA_MOVIE_TITLE, movie.title)
+                    }
+                    itemView.context.startActivity(intent)
+                }
                 ivProfile.loadImage(movie.fullPoster, R.drawable.ic_poster_placeholder)
                 val year = yearSdf.format(movie.releaseDate)
                 tvTitle.text = itemView.context.getString(R.string.title_year, movie.title, year)
