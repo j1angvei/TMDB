@@ -17,4 +17,5 @@ const val CALL_TIME_OUT = 10L // 10s超时
 const val EXTRA_MOVIE_ID = "movie_id"
 const val EXTRA_MOVIE_TITLE = "movie_title"
 const val EXTRA_PERSON_ID = "person_id"
+const val EXTRA_PERSON_NAME = "person_name"
 

@@ -1,12 +1,19 @@
 package cn.j1angvei.tmdb.list.person
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import cn.j1angvei.tmdb.EXTRA_MOVIE_ID
+import cn.j1angvei.tmdb.EXTRA_MOVIE_TITLE
+import cn.j1angvei.tmdb.EXTRA_PERSON_ID
+import cn.j1angvei.tmdb.EXTRA_PERSON_NAME
 import cn.j1angvei.tmdb.R
 import cn.j1angvei.tmdb.databinding.ItemPopularPersonBinding
+import cn.j1angvei.tmdb.detail.MovieDetailActivity
+import cn.j1angvei.tmdb.detail.PersonDetailActivity
 import cn.j1angvei.tmdb.loadImage
 import cn.j1angvei.tmdb.setRadius
 import kotlin.math.roundToInt
@@ -45,6 +52,13 @@ class PersonListAdapter : PagingDataAdapter<Person, PersonListAdapter.ViewHolder
         fun bind(person: Person?) {
             person ?: return
             with(binding) {
+                root.setOnClickListener {
+                    val intent = Intent(itemView.context, PersonDetailActivity::class.java).apply {
+                        putExtra(EXTRA_PERSON_ID, person.id)
+                        putExtra(EXTRA_PERSON_NAME, person.name)
+                    }
+                    itemView.context.startActivity(intent)
+                }
                 ivProfile.loadImage(person.fullProfile, R.drawable.ic_person_placeholder)
                 tvName.text = person.name
                 tvPopularity.text = person.popularity.roundToInt().toString()
