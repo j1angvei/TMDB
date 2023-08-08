@@ -5,13 +5,18 @@ import android.util.Log
 import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
+import cn.j1angvei.tmdb.R
 import cn.j1angvei.tmdb.TAG
 import cn.j1angvei.tmdb.databinding.ActivityPersonDetailBinding
+import cn.j1angvei.tmdb.loadImage
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 /**
  *
@@ -24,6 +29,7 @@ class PersonDetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityPersonDetailBinding
     private val viewModel: PersonDetailViewModel by viewModels()
     private val pagerAdapter = PersonCreditsPagerAdapter()
+    private val birthdaySdf = SimpleDateFormat("生日：yyyy年MM月dd日", Locale.CHINA)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -57,6 +63,15 @@ class PersonDetailActivity : AppCompatActivity() {
     }
 
     private fun updatePersonDetail(detail: PersonDetail) {
+        with(binding) {
+            ivProfile.loadImage(detail.fullProfile, R.drawable.ic_person_placeholder)
+            tvName.text = detail.name
+            tvOtherNames.text = detail.chineseName()
+            tvBirthday.text = birthdaySdf.format(detail.birthday)
+            tvPlaceOfBirth.text = detail.placeOfBirth
+            tvOverview.text = detail.biography
+            tvOverviewHeader.isVisible = true
+        }
         pagerAdapter.setData(detail.movieCredits.cast, detail.tvCredits.cast)
     }
 
