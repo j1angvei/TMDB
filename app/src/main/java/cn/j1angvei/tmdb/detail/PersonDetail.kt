@@ -11,6 +11,6 @@ data class PersonDetail(
     val name: String,
     val placeOfBirth: String,
     val profilePath: String,
-    val tvCredits: PersonCredits<PersonCredits.TvCast>,
-    val movieCredits: PersonCredits<PersonCredits.MovieCast>
+    val tvCredits: PersonCredits,
+    val movieCredits: PersonCredits
 )

@@ -3,4 +3,6 @@
     <dimen name="offset_big_person">12dp</dimen>
     <dimen name="offset_small_person">6dp</dimen>
     <dimen name="offset_cast">12dp</dimen>
+    <dimen name="offset_big_credits">8dp</dimen>
+    <dimen name="offset_small_credits">4dp</dimen>
 </resources>

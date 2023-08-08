@@ -1,20 +1,19 @@
 package cn.j1angvei.tmdb.detail
 
-data class PersonCredits<T>(val cast: List<T>) {
-    data class TvCast(
-        val id: Int,
-        val name: String,
-        val posterPath: String,
-        val voteAverage: Float,
-        val character: String,
-        val episodeCount: Int
-    )
+import cn.j1angvei.tmdb.TMDB_IMG_URL
+import com.google.gson.annotations.SerializedName
 
-    data class MovieCast(
+data class PersonCredits(val cast: List<Cast>) {
+
+    data class Cast(
         val id: Int,
-        val name: String,
+        @SerializedName("name", alternate = ["title"])
+        val title: String?,
         val posterPath: String,
         val voteAverage: Float,
         val character: String,
-    )
+    ) {
+        val fullPoster: String
+            get() = TMDB_IMG_URL + posterPath
+    }
 }

@@ -23,6 +23,7 @@ class PersonDetailActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityPersonDetailBinding
     private val viewModel: PersonDetailViewModel by viewModels()
+    private val pagerAdapter = PersonCreditsPagerAdapter()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -40,10 +41,9 @@ class PersonDetailActivity : AppCompatActivity() {
     }
 
     private fun setupViewPager() {
-        val adapter = PersonCreditsPagerAdapter()
-        binding.vpCredits.adapter = adapter
+        binding.vpCredits.adapter = pagerAdapter
         TabLayoutMediator(binding.creditsTab, binding.vpCredits) { tab, position ->
-            tab.text = PersonCreditsType.values()[position].text
+            tab.text = if (position == 0) "电影" else "电视剧"
         }.attach()
     }
 
@@ -57,7 +57,7 @@ class PersonDetailActivity : AppCompatActivity() {
     }
 
     private fun updatePersonDetail(detail: PersonDetail) {
-        Log.d(TAG, "updatePersonDetail: $detail")
+        pagerAdapter.setData(detail.movieCredits.cast, detail.tvCredits.cast)
     }
 
     private fun showErrorHint() {
