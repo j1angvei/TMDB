@@ -6,6 +6,7 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import cn.j1angvei.tmdb.Navigator
 import cn.j1angvei.tmdb.R
 import cn.j1angvei.tmdb.databinding.ItemCastCrewHeaderBinding
 import cn.j1angvei.tmdb.databinding.ItemMovieCastBinding
@@ -77,9 +78,12 @@ class CastCrewAdapter : ListAdapter<Any, RecyclerView.ViewHolder>(diffCallback) 
         fun bind(cast: Cast?) {
             binding.root.isVisible = cast != null
             cast ?: return
+            val ctx = binding.root.context
+            binding.root.setOnClickListener {
+                Navigator.toPersonDetail(ctx, cast.id, cast.name)
+            }
             binding.ivProfile.loadImage(cast.fullProfile, R.drawable.ic_person_placeholder)
             binding.tvName.text = cast.name
-            val ctx = binding.root.context
             binding.tvJob.text =
                 ctx.getString(R.string.cast_job, if (cast.isMale) "Actor" else "Actress")
             val character = cast.character.ifBlank { "未知角色" }

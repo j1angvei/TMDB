@@ -69,7 +69,7 @@ class PersonDetailActivity : AppCompatActivity() {
             tvOtherNames.text = detail.chineseName()
             tvBirthday.text = birthdaySdf.format(detail.birthday)
             tvPlaceOfBirth.text = detail.placeOfBirth
-            tvOverview.text = detail.biography
+            tvOverview.text = detail.biography.ifBlank { "暂无人物简介，欢迎补充" }
             tvOverviewHeader.isVisible = true
         }
         pagerAdapter.setData(detail.movieCredits.cast, detail.tvCredits.cast)

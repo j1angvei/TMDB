@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import cn.j1angvei.tmdb.EXTRA_MOVIE_ID
 import cn.j1angvei.tmdb.EXTRA_MOVIE_TITLE
+import cn.j1angvei.tmdb.Navigator
 import cn.j1angvei.tmdb.R
 import cn.j1angvei.tmdb.databinding.ItemPopularMovieBinding
 import cn.j1angvei.tmdb.detail.MovieDetailActivity
@@ -48,11 +49,7 @@ class MovieListAdapter : PagingDataAdapter<Movie, MovieListAdapter.ViewHolder>(d
             movie ?: return
             with(binding) {
                 root.setOnClickListener {
-                    val intent = Intent(itemView.context, MovieDetailActivity::class.java).apply {
-                        putExtra(EXTRA_MOVIE_ID, movie.id)
-                        putExtra(EXTRA_MOVIE_TITLE, movie.title)
-                    }
-                    itemView.context.startActivity(intent)
+                    Navigator.toMovieDetail(itemView.context, movie.id, movie.title)
                 }
                 ivProfile.loadImage(movie.fullPoster, R.drawable.ic_poster_placeholder)
                 val year = yearSdf.format(movie.releaseDate)

@@ -74,7 +74,7 @@ class MovieDetailActivity : AppCompatActivity() {
                     .append(" / 时长：").append(detail.runtime).append("分钟").toString()
             tvExtraInfo.text = extraInfo
             tvOverviewHeader.isVisible = true
-            tvOverview.text = detail.overview
+            tvOverview.text = detail.overview.ifBlank { "暂无剧情简介，欢迎补充" }
             val castCrewList = mutableListOf<Any>()
             if (detail.credits.cast.isNotEmpty()) {
                 castCrewList.add(CastCrewHeader("演员", detail.credits.cast.size))

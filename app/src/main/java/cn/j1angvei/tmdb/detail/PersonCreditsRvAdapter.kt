@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import cn.j1angvei.tmdb.Navigator
 import cn.j1angvei.tmdb.R
 import cn.j1angvei.tmdb.databinding.ItemCreditsCastBinding
 import cn.j1angvei.tmdb.loadImage
@@ -49,6 +50,9 @@ class PersonCreditsRvAdapter :
         RecyclerView.ViewHolder(binding.root) {
         fun bindData(cast: PersonCredits.Cast) {
             with(binding) {
+                root.setOnClickListener {
+                    Navigator.toMovieDetail(root.context, cast.id, cast.title ?: "")
+                }
                 ivPoster.loadImage(cast.fullPoster, R.drawable.ic_poster_placeholder)
                 tvTitle.text = cast.title
                 tvCharacter.text = tvCharacter.context.getString(
