@@ -1,4 +1,4 @@
-# TMDB
+# TMDB APP
 
 ## Product Design
 <img src="./images/tmdb_prd.png" width="1000px" alt="原型设计">
