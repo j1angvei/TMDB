@@ -30,7 +30,7 @@ interface TmdbApiService {
 
     @GET("person/{id}")
     suspend fun personDetail(
-        @Path("id") movieId: Int,
+        @Path("id") personId: Int,
         @Query("language") language: String = "zh-CN",
         @Query("append_to_response") appendToRsp: String = "tv_credits,movie_credits,images"
     ): PersonDetail
